@@ -5,6 +5,8 @@ library(lubridate)
 
 rm(list = ls())
 
+print("Hello World")
+
 # Time-series plots of rain inputs and streamwater concentrations are presented as 9-wk moving averages. This approach minimized rapid fluctuations
 # caused by concentration-discharge interactions, made longer-term patterns
 # more apparent, and permitted data from several streams and ions to be presented together. Stream concentration data are presented in two groups, the
