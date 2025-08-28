@@ -22,11 +22,11 @@ sites <- c("BQ1", "BQ2", "BQ3", "PRM")
 # bind dataframes
 all_sites_df <- rbind(BQ1_df, BQ2_df, BQ3_df, PRM_df) %>%
   
+  # Restrict the year to 1988 - 1994
+  filter(year(Sample_Date) >= 1988, year(Sample_Date) <= 1994) %>%
+  
   # convert the sample_date to posixct (seconds)
   mutate(date = as.POSIXct(ymd(Sample_Date), tz = "UTC")) %>%
-  
-  # Restrict the year to 1988 - 1994
-  filter(year(date) >= 1988, year(date) <= 1994) %>%
   
   # Select the necessary columns
   select(date, site, "K", "NO3-N", "Mg", "Ca", "NH4-N") %>%
@@ -35,7 +35,7 @@ all_sites_df <- rbind(BQ1_df, BQ2_df, BQ3_df, PRM_df) %>%
   arrange(site, date)
 
 
-# Collapse values
+# Collapse values and calculate moving average
 long <- all_sites_df %>%
   # Make a column named compound to hold the chemical name
   pivot_longer(cols = c(K, "NO3-N", Mg, Ca, "NH4-N"), names_to = "compound", values_to = "value") %>%
@@ -88,11 +88,14 @@ ggplot(long, aes(x = date, y = rolling_means, linetype = site, group = site)) +
   theme(
     panel.grid.minor = element_blank(),
     strip.background = element_blank(),
-    strip.text = element_text(hjust = 0),
+    #strip.text = element_text(hjust = 0),
     strip.text.y.left = element_text(),
-    strip.placement = "outside"
+    strip.placement = "outside",
+    panel.spacing.y = unit(0, "lines"),
+    legend.title = element_blank(),
+    legend.position = c(0.89, 0.91)
   )
   
-  
+  ggsave(here("output","replica_plot.png"), width = 1560, height = 2167, units = "px")
 
   

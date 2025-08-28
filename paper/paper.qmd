@@ -1,6 +1,7 @@
 ---
 title: "Replicate Figure"
 format: html
+code-fold: true
 editor: visual
 bibliography: references.bib
 ---
@@ -9,7 +10,7 @@ bibliography: references.bib
 
 ### Purpose
 
-This document contains the scripts necessary to replicate figure 2 from *Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental\
+![](/resources/figure_to_replicate.png){style="float:right;"} This document contains the scripts necessary to replicate figure 2 from *Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental\
 Forest, Puerto Rico* [@schaefer2000]. In the methods section, the details of figure 2 are described as follows:
 
 > "Time-series plots of rain inputs and streamwater concentrations are presented as 9-wk moving averages. This approach minimized rapid fluctuations caused by concentration-discharge interactions, made longer-term patterns more apparent, and permitted data from several streams and ions to be presented together. Stream concentration data are presented in two groups, the El Verde streams (QS, QT, QPA, QPB), and the Bisley streams (PRM, BQ1, BQ2, BQ3). Moving averages were not plotted where there were gaps in sampling or in particular chemical analyses."
@@ -45,5 +46,7 @@ The following analysis requires only one valid concentration value within a 9-wk
 The data required to run this script can be downloaded independently [here](https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-luq.20.4923064)
 
 ## Methods
+
+After [cleaning](scripts/2_process_data.R)
 
 ## Results

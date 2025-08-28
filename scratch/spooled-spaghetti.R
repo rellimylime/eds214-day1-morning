@@ -115,6 +115,7 @@ long <- all_sites_df %>%
 # print(nh4_coverage, n = 100)
 
 long <- long %>%
+  # order by date within the
   arrange(date, .by_group = TRUE) %>%
   mutate(rolling_means = calc_moving_avg(date, value))
 
