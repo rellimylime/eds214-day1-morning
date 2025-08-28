@@ -23,7 +23,7 @@ The data can be downloaded [here](https://portal.edirepository.org/nis/mapbrowse
 - [:file_folder: scratch](/scratch): Render this to run everything
 
 ## Methods
-```{mermaid}
+```mermaid
 flowchart LR
 A[Determine Necessary files] --> B{Does it need cleaning/parsing?};
 B -- yes --> C[Clean data]; 
