@@ -38,7 +38,22 @@ find_median <- function(x) {
 #' @examples
 #' long <- long %>%
 #' arrange(date, .by_group = TRUE) %>%
-#'   mutate(rolling_means = calc_moving_avg(date, value))
+#' mutate(rolling_means = calc_moving_avg(date, 
+#'                                        value))
+#'   
+#' Alternatively to adjust the defaults, e.g. to assert at least 5 valid samples within the desired interval and 
+#' ensure that the intervals only contain samples collected within 3 week intervals
+#' 
+#' long <- long %>% 
+#' arrange(date, .group_by = TRUE) %>% 
+#' mutate(rolling_means = calc_moving_avg(date, 
+#'                                        value, 
+#'                                        half_interval = 4.5, 
+#'                                        min_valid_interval_points = 5,
+#'                                        max_gap_weeks = 3))  
+#'   
+#'   
+#'   
 calc_moving_avg <- function(dates, 
                             values,
                             half_interval = 4.5, 

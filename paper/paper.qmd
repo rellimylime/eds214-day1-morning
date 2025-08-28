@@ -2,13 +2,48 @@
 title: "Replicate Figure"
 format: html
 editor: visual
+bibliography: references.bib
 ---
 
 ## Background
 
+### Purpose
+
+This document contains the scripts necessary to replicate figure 2 from *Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental\
+Forest, Puerto Rico* [@schaefer2000]. In the methods section, the details of figure 2 are described as follows:
+
+> "Time-series plots of rain inputs and streamwater concentrations are presented as 9-wk moving averages. This approach minimized rapid fluctuations caused by concentration-discharge interactions, made longer-term patterns more apparent, and permitted data from several streams and ions to be presented together. Stream concentration data are presented in two groups, the El Verde streams (QS, QT, QPA, QPB), and the Bisley streams (PRM, BQ1, BQ2, BQ3). Moving averages were not plotted where there were gaps in sampling or in particular chemical analyses."
+
+### Data Description
+
+The data utilized in this analysis come from is was collected from 1983 - 2020 (this analysis utilizes records from 1988 to 1994) in the Luquillo Experimental Forest (LEF) at the following sites: - Quebrada uno-Bisley, Q1, Bisley stream - Quebrada dos-Bisley, Q2, Bisley stream - Quebrada dos-Bisley, Q3, Bisley stream - Puente Roto Mameyes, MPR, Bisley distributary stream.
+
+Temporally the samples are irregularly spaced, roughly weekly to monthly, with gaps. The following are the fields from the data relevant to this analysis:
+
+Sample_Date, POSIXct timestamp
+
+site, stream ID as a string
+
+K, potassium, mg L\^-1
+
+NO3-N, nitrate as nitrogen, µg N L\^-1
+
+NH4-N, ammonium as nitrogen, µg N L\^-1
+
+Mg, magnesium, mg L\^-1
+
+Ca, calcium, mg L\^-1
+
+#### Assumptions + Disclaimers:
+
+The moving averages calculated in this analysis are center aligned
+
+The following analysis requires only one valid concentration value within a 9-wk period to calculate and plot the mean. Additionally, there is no restriction on the time passed between valid samples. If you wish to add such constraints (or adjust the rolling average interval) the **calc_moving_avg()** function contains parameters whose default values can be changed or over ridden at the time of the call. (See the [function documentation](R/utils.R) for an example demonstrating this adjustment)
+
 ## Data
+
+The data required to run this script can be downloaded independently [here](https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-luq.20.4923064)
 
 ## Methods
 
 ## Results
-
