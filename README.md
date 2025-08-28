@@ -15,13 +15,45 @@ The data can be downloaded [here](https://portal.edirepository.org/nis/mapbrowse
 ## Contents
 
 - [:file_folder: paper](/paper): Render this to run everything
-- [:file_folder: docs](/docs): Render this to run everything
+- [:file_folder: docs](/docs): Contains rendered paper
 - [:file_folder: resources](/figures): Contains the original figure we are attempting to replicate and our analysis flowchart
 - [:file_folder: scripts](/scripts): Contains utility, cleaning, analysis, and plotting scripts
 - [:file_folder: data](/data): Includes raw (and processed) data
 - [:file_folder: output](/output): Contains the resulting figure
 - [:file_folder: scratch](/scratch): Render this to run everything
 
+## Methods
+```{mermaid}
+flowchart LR
+A[Determine Necessary files] --> B{Does it need cleaning/parsing?};
+B -- yes --> C[Clean data]; 
+B -- no --> H[Collapse value duplicates using median];
+
+C -- Add column to each with site code --> G[Join data together];
+
+H -- [K] --> I[Group and find median to replace repeat values];
+H -- [NO3-N] --> I;
+H -- [Mg] --> I;
+H -- [Ca] --> I;
+H -- [NH4-N] --> I;
+H -- [Date] --> I;
+H -- [Site] --> I;
+
+G -- Parse date columns, filter to relevant years --> H;
+G -- Convert to POSIXct --> H; 
+G -- Order by site and date --> H;
+
+I -- order by date within the site/compound groups --> J[Apply rolling average function];
+I -- pivot longer: make compound and site values into categorical columns --> J;
+J --> K[Plot it!];
+K --> L["geom_line (NA removed)"];
+K --> M[set line styles per site];
+K --> N[vertical line for date of hurricane];
+K --> O[facet wrap by compound and let the y scale vary];
+K --> P[label x-axis];
+K --> Q[Black and white theme];
+K --> R[Other theme elements to mimic graph aesthetics]
+```
 
 ## References
 - Schaefer, Doug & McDowell, William & Scatena, Frederick & Asbury, Clyde. (2000). *Effects of Hurricane Disturbance on Stream Water Concentrations and Fluxes in Eight Tropical Forest Watersheds of the Luquillo Experimental Forest, Puerto Rico*. Departmental Papers (EES). 16. 10.1017/S0266467400001358. 
