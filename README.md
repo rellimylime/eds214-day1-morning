@@ -14,6 +14,14 @@ The data can be downloaded [here](https://portal.edirepository.org/nis/mapbrowse
 
 ## Contents
 
+- [:file_folder: paper](/paper): Render this to run everything
+- [:file_folder: docs](/docs): Render this to run everything
+- [:file_folder: resources](/figures): Contains the original figure we are attempting to replicate and our analysis flowchart
+- [:file_folder: scripts](/scripts): Contains utility, cleaning, analysis, and plotting scripts
+- [:file_folder: data](/data): Includes raw (and processed) data
+- [:file_folder: output](/output): Contains the resulting figure
+- [:file_folder: scratch](/scratch): Render this to run everything
+
 
 ## References
 - Schaefer, Doug & McDowell, William & Scatena, Frederick & Asbury, Clyde. (2000). *Effects of Hurricane Disturbance on Stream Water Concentrations and Fluxes in Eight Tropical Forest Watersheds of the Luquillo Experimental Forest, Puerto Rico*. Departmental Papers (EES). 16. 10.1017/S0266467400001358. 

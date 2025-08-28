@@ -3,7 +3,8 @@ library(tidyverse)
 library(here)
 library(lubridate)
 
-rm(list = ls())
+source("R/util.R")
+
 
 print("Hello")
 
@@ -14,13 +15,13 @@ print("Hello")
 # BQ2, BQ3). Moving averages were not plotted where there were gaps in sampling or in particular chemical analyses.
 
 # Load data
-BQ1_df <- read_csv(here("data", "QuebradaCuenca1-Bisley.csv")) %>%
+BQ1_df <- read_csv(here("data", "raw_data", "QuebradaCuenca1-Bisley.csv")) %>%
   mutate(site = "BQ1")
-BQ2_df <- read_csv(here("data", "QuebradaCuenca2-Bisley.csv")) %>%
+BQ2_df <- read_csv(here("data", "raw_data", "QuebradaCuenca2-Bisley.csv")) %>%
   mutate(site = "BQ2")
-BQ3_df <- read_csv(here("data", "QuebradaCuenca3-Bisley.csv")) %>%
+BQ3_df <- read_csv(here("data", "raw_data", "QuebradaCuenca3-Bisley.csv")) %>%
   mutate(site = "BQ3")
-PRM_df <- read_csv(here("data", "RioMameyesPuenteRoto.csv")) %>%
+PRM_df <- read_csv(here("data", "raw_data", "RioMameyesPuenteRoto.csv")) %>%
   mutate(site = "PRM")
 
 compounds <- c("K", "NO3-N", "Mg", "Ca", "NH4-N")
@@ -32,55 +33,55 @@ week_sec <- 7 * 24 * 60 * 60
 
 
 # Define function to calculate moving average
-calc_moving_avg <- function(dates, values, half_interval = 4.5, min_valid_interval_points = 1, max_gap_weeks = 1000) {
-  
-  half_interval_sec <- half_interval * 7 * 24 * 60 * 60
-  
-  # date values in  numerical POSIXct
-  date_sec <- as.numeric(dates)
-
-  # generate empty vector to store rolled means
-  rolled_means <- rep(NA_real_, length(values))
-
-  # iterate along length of values
-  for (i in seq_along(values)) {
-    # identify interval values for each date
-    interval_bool <- abs(date_sec - date_sec[i]) <= half_interval_sec
-
-    # subset values and dates to those in the interval
-    interval_vals <- values[interval_bool]
-    dates <- date_sec[interval_bool]
-
-    # remove NA values and dates
-    non_na_elements <- !is.na(interval_vals)
-
-    vals <- interval_vals[non_na_elements]
-    dates <- dates[non_na_elements]
-
-    if (length(vals) < min_valid_interval_points) {
-      next
-    } else if (is.finite(max_gap_weeks)) {
-      # Time between observations
-      gaps <- diff(sort(dates))
-      # If the gap between data is greater than our max gap go to next iteration
-      if ((length(dates) > 1) & (max(gaps) > max_gap_weeks * week_sec)) {
-        next
-      }
-
-      rolled_means[i] <- mean(vals)
-    }
-  }
-  return(rolled_means)
-}
+# calc_moving_avg <- function(dates, values, half_interval = 4.5, min_valid_interval_points = 1, max_gap_weeks = 1000) {
+#   
+#   half_interval_sec <- half_interval * 7 * 24 * 60 * 60
+#   
+#   # date values in  numerical POSIXct
+#   date_sec <- as.numeric(dates)
+# 
+#   # generate empty vector to store rolled means
+#   rolled_means <- rep(NA_real_, length(values))
+# 
+#   # iterate along length of values
+#   for (i in seq_along(values)) {
+#     # identify interval values for each date
+#     interval_bool <- abs(date_sec - date_sec[i]) <= half_interval_sec
+# 
+#     # subset values and dates to those in the interval
+#     interval_vals <- values[interval_bool]
+#     dates <- date_sec[interval_bool]
+# 
+#     # remove NA values and dates
+#     non_na_elements <- !is.na(interval_vals)
+# 
+#     vals <- interval_vals[non_na_elements]
+#     dates <- dates[non_na_elements]
+# 
+#     if (length(vals) < min_valid_interval_points) {
+#       next
+#     } else if (is.finite(max_gap_weeks)) {
+#       # Time between observations
+#       gaps <- diff(sort(dates))
+#       # If the gap between data is greater than our max gap go to next iteration
+#       if ((length(dates) > 1) & (max(gaps) > max_gap_weeks * week_sec)) {
+#         next
+#       }
+# 
+#       rolled_means[i] <- mean(vals)
+#     }
+#   }
+#   return(rolled_means)
+# }
 
 # Function to find median of list of values while accounting for NA
-find_median <- function(x) {
-  if (all(is.na(x))) {
-    NA_real_
-  } else {
-    return(median(x, na.rm = TRUE))
-  }
-}
+# find_median <- function(x) {
+#   if (all(is.na(x))) {
+#     NA_real_
+#   } else {
+#     return(median(x, na.rm = TRUE))
+#   }
+# }
 # Deal with duplicate date entries
 
 
@@ -135,7 +136,8 @@ long <- long %>%
 # }
 
 ggplot(long, aes(x = date, y = rolling_means, linetype = site, group = site)) +
-  geom_line(na.rm = TRUE) +
+  
+  geom_line(, na.rm = TRUE) +
   geom_vline(xintercept = as.POSIXct("1989-09-22", tz = "America/New_York"), linetype = "longdash", color = "grey") +
   facet_wrap(~compound, ncol = 1, scales = "free_y") +
   scale_linetype_manual(
@@ -151,8 +153,8 @@ ggplot(long, aes(x = date, y = rolling_means, linetype = site, group = site)) +
   )
 
 
-vec <- c(1, 1, 2)
-print(diff(vec))
+#vec <- c(1, 1, 2)
+#print(diff(vec))
 
 
 # ggsave(here("figs","spooled-spaghetti-plot.png"), width = 6, height = 8)
