@@ -20,19 +20,19 @@ The data utilized in this analysis come from is was collected from 1983 - 2020 (
 
 Temporally the samples are irregularly spaced, roughly weekly to monthly, with gaps. The following are the fields from the data relevant to this analysis:
 
-Sample_Date, POSIXct timestamp
+Sample_Date \> YYYY-DD-MM
 
-site, stream ID as a string
+Sample_ID \> Site name abreviation (e.g. Q1-Q3, PRM)
 
-K, potassium, mg L\^-1
+K \> potassium concentration, mg L\^-1
 
-NO3-N, nitrate as nitrogen, µg N L\^-1
+NO3-N \> nitrate as nitrogen concentration, µg N L\^-1
 
-NH4-N, ammonium as nitrogen, µg N L\^-1
+NH4-N, ammonium as nitrogen concentration, µg N L\^-1
 
-Mg, magnesium, mg L\^-1
+Mg, magnesium concentration, mg L\^-1
 
-Ca, calcium, mg L\^-1
+Ca, calcium concentration, mg L\^-1
 
 #### Assumptions + Disclaimers:
 

@@ -84,10 +84,35 @@ div.csl-indent {
 
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
-<p>This document contains the scripts necessary to replicate <span class="citation" data-cites="schaefer2000">Schaefer et al. (<a href="#ref-schaefer2000" role="doc-biblioref">2000</a>)</span></p>
+<section id="purpose" class="level3">
+<h3 class="anchored" data-anchor-id="purpose">Purpose</h3>
+<p>This document contains the scripts necessary to replicate figure 2 from <em>Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental<br>
+Forest, Puerto Rico</em> <span class="citation" data-cites="schaefer2000">(<a href="#ref-schaefer2000" role="doc-biblioref">Schaefer et al. 2000</a>)</span>. In the methods section, the details of figure 2 are described as follows:</p>
+<blockquote class="blockquote">
+<p>“Time-series plots of rain inputs and streamwater concentrations are presented as 9-wk moving averages. This approach minimized rapid fluctuations caused by concentration-discharge interactions, made longer-term patterns more apparent, and permitted data from several streams and ions to be presented together. Stream concentration data are presented in two groups, the El Verde streams (QS, QT, QPA, QPB), and the Bisley streams (PRM, BQ1, BQ2, BQ3). Moving averages were not plotted where there were gaps in sampling or in particular chemical analyses.”</p>
+</blockquote>
+</section>
+<section id="data-description" class="level3">
+<h3 class="anchored" data-anchor-id="data-description">Data Description</h3>
+<p>The data utilized in this analysis come from is was collected from 1983 - 2020 (this analysis utilizes records from 1988 to 1994) in the Luquillo Experimental Forest (LEF) at the following sites: - Quebrada uno-Bisley, Q1, Bisley stream - Quebrada dos-Bisley, Q2, Bisley stream - Quebrada dos-Bisley, Q3, Bisley stream - Puente Roto Mameyes, MPR, Bisley distributary stream.</p>
+<p>Temporally the samples are irregularly spaced, roughly weekly to monthly, with gaps. The following are the fields from the data relevant to this analysis:</p>
+<p>Sample_Date &gt; YYYY-DD-MM</p>
+<p>Sample_ID &gt; Site name abreviation (e.g.&nbsp;Q1-Q3, PRM)</p>
+<p>K &gt; potassium concentration, mg L^-1</p>
+<p>NO3-N &gt; nitrate as nitrogen concentration, µg N L^-1</p>
+<p>NH4-N, ammonium as nitrogen concentration, µg N L^-1</p>
+<p>Mg, magnesium concentration, mg L^-1</p>
+<p>Ca, calcium concentration, mg L^-1</p>
+<section id="assumptions-disclaimers" class="level4">
+<h4 class="anchored" data-anchor-id="assumptions-disclaimers">Assumptions + Disclaimers:</h4>
+<p>The moving averages calculated in this analysis are center aligned</p>
+<p>The following analysis requires only one valid concentration value within a 9-wk period to calculate and plot the mean. Additionally, there is no restriction on the time passed between valid samples. If you wish to add such constraints (or adjust the rolling average interval) the <strong>calc_moving_avg()</strong> function contains parameters whose default values can be changed or over ridden at the time of the call. (See the <a href="R/utils.R">function documentation</a> for an example demonstrating this adjustment)</p>
+</section>
+</section>
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>The data required to run this script can be downloaded independently <a href="https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-luq.20.4923064">here</a></p>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
