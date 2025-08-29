@@ -18,9 +18,11 @@ The data can be downloaded
 [here](https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-luq.20.4923064).
 The following are the data files whose download is required to run the
 script. These files can be found in the [/data/raw_data](/data/raw)
-folder: - Quebrada one-Bisley (Q1) Chemistry Data - Quebrada one-Bisley
-(Q2) Chemistry Data - Quebrada one-Bisley (Q3) Chemistry Data - Puente
-Roto Mameyes (MPR) Chemistry Data
+folder: 
+- Quebrada one-Bisley (Q1) Chemistry Data 
+- Quebrada one-Bisley (Q2) Chemistry Data 
+- Quebrada one-Bisley (Q3) Chemistry Data 
+- Puente Roto Mameyes (MPR) Chemistry Data
 
 ## Contents
 
@@ -183,23 +185,10 @@ K --> Q[Black and white theme];
 K --> R[Other theme elements to mimic graph aesthetics]
 ```
 
-::: scrollable-image-container
-<img src="resources/flowchart.png" alt="Workflow chart"/>
-:::
+<div style="overflow-x:auto; max-width:100%; border:1px solid #ddd; padding:8px;">
+<img src="resource/flowchart.png" alt="Flowchart" style="display:block; max-width:none; height:auto;">
+</div>
 
-::: {style="overflow-x:auto; max-width:100%; border:1px solid #ddd; padding:8px;"}
-```{=html}
-<img src="resources/flowchart.png" alt="Flowchart"
-       style="display:block; max-width:none; height:auto;">
-```
-:::
-
-::: {#flow-wrap style="overflow:auto; border:1px solid #ddd; max-width:100%; height:70vh;"}
-```{=html}
-<img id="flow-img" src="figures/flowchart.png" alt="Flowchart"
-       style="display:block; max-width:none; height:auto; transform-origin:0 0;">
-```
-:::
 
 ## References
 
