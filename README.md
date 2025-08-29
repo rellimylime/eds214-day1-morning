@@ -29,7 +29,6 @@ folder:
 <details>
 
 <summary>
-
 [**data**](/data): Contains raw and processed data</summary>
 
 **Key Files**
