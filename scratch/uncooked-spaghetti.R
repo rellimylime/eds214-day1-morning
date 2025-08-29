@@ -21,16 +21,12 @@ sites <- c("BQ1", "BQ2", "BQ3", "PRM")
 
 # bind dataframes
 all_sites_df <- rbind(BQ1_df, BQ2_df, BQ3_df, PRM_df) %>%
-  
-  # Restrict the year to 1988 - 1994
-  filter(year(Sample_Date) >= 1988, year(Sample_Date) <= 1994) %>%
-  
   # convert the sample_date to posixct (seconds)
   mutate(date = as.POSIXct(ymd(Sample_Date), tz = "UTC")) %>%
-  
+  # Restrict the year to 1988 - 1994
+  filter(dplyr::between(year(date), 1988, 1994)) %>%
   # Select the necessary columns
   select(date, site, "K", "NO3-N", "Mg", "Ca", "NH4-N") %>%
-  
   # Order by site and date (ascending)
   arrange(site, date)
 
@@ -39,63 +35,73 @@ all_sites_df <- rbind(BQ1_df, BQ2_df, BQ3_df, PRM_df) %>%
 long <- all_sites_df %>%
   # Make a column named compound to hold the chemical name
   pivot_longer(cols = c(K, "NO3-N", Mg, Ca, "NH4-N"), names_to = "compound", values_to = "value") %>%
-  
   # Make the compound and site column values categorical
   mutate(
     compound = factor(compound, levels = compounds),
     site = factor(site, levels = sites)
-  ) %>% 
-  
+  ) %>%
   # Group by site compound and date
   group_by(site, compound, date) %>%
-  
   # Collapse multiple values with same date, site, compound by selecting the median value
   summarize(
     value = find_median(value)
   ) %>%
-  
   # order by date within the site/compound groups
   arrange(date, .by_group = TRUE) %>%
-  
   # Add column for the rolling means using the calc_moving_avg function
   mutate(rolling_means = calc_moving_avg(date, value))
 
 
-# Make the plot
-ggplot(long, aes(x = date, y = rolling_means, linetype = site, group = site)) +
-  
-  # Line plot of means over time
-  geom_line(na.rm = TRUE) +
-  
-  # Specify the line types for each group category (site)
-  scale_linetype_manual(
-    values = c("solid", "dotted", "dashed", "dotdash")
-  ) +
-  
-  # Add vertical line that represents the approx date of the hurricane
-  geom_vline(xintercept = as.POSIXct("1989-09-22", tz = "America/New_York"), linetype = "longdash", color = "grey") +
-  
-  # Made a 1 column grid of plots for each compound, let the y axis scale automatically 
-  facet_wrap(~compound, ncol = 1, scales = "free_y", strip.position = "left") +
-  
-  # 
-  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
-  
-  labs(x = "Years", y = NULL) +
-  
-  theme_bw() +
-  
-  theme(
-    panel.grid.minor = element_blank(),
-    strip.background = element_blank(),
-    #strip.text = element_text(hjust = 0),
-    strip.text.y.left = element_text(),
-    strip.placement = "outside",
-    panel.spacing.y = unit(0, "lines"),
-    legend.title = element_blank(),
-    legend.position = c(0.89, 0.91)
-  )
-  
-  ggsave(here("output","replica_plot.png"), width = 1560, height = 2167, units = "px")
 
-  
+
+# Make the plot
+p <- ggplot(long, aes(x = date, y = rolling_means, linetype = site)) +
+  # Draw the time series lines; drop rows with NA y values
+  geom_line(na.rm = TRUE) +
+  # Use specific line types for each site; keeps legend readable
+  scale_linetype_manual(values = c("solid", "dotted", "dashed", "dotdash")) +
+  # Add a vertical line for Hurricane Hugo (Sept 22, 1989)
+  geom_vline(
+    xintercept = as.POSIXct("1989-09-22", tz = "UTC"),
+    linetype = "longdash",
+    color = "grey"
+  ) +
+  # Make a panel per compound, one column, free y scales
+  # Label strips on the left with readable text
+  facet_wrap(
+    ~compound,
+    ncol = 1,
+    scales = "free_y",
+    strip.position = "left",
+    labeller = as_labeller(c(
+      "K"     = "Potassium\nconcentration\n(mg L^-1)",
+      "NO3-N" = "Nitrate as nitrogen\nconcentration\n(ug N L^-1)",
+      "Mg"    = "Magnesium\nconcentration\n(mg L^-1)",
+      "Ca"    = "Calcium\nconcentration\n(mg L^-1)",
+      "NH4-N" = "Ammonium as nitrogen\nconcentration\n(ug N L^-1)"
+    ))
+  ) +
+  # Axis labels; y is NULL because each panel title carries units
+  labs(x = "Years", y = NULL) +
+  # Baseline black and white theme
+  theme_bw() +
+  # Tidy up grid and strip placement
+  theme(
+    panel.grid.minor = element_blank(),                # hide minor grid lines
+    strip.background = element_blank(),                # remove strip background
+    strip.text.y.left = element_text(),                # keep left strip text
+    strip.placement = "outside",                       # place strips outside panel
+    panel.spacing.y = grid::unit(0, "lines"),          # no vertical spacing between panels
+    legend.title = element_blank(),                    # no legend title
+    legend.position = c(0.89, 0.91)                    # place legend inside plot
+  )
+
+# Show the plot in the RStudio Plots pane when running via source()
+print(p)
+
+# Save to file; pass plot explicitly
+ggsave(
+  filename = here("output", "replica_plot.png"),
+  plot = p,
+  width = 1560, height = 2167, units = "px"
+)

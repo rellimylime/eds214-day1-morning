@@ -1,36 +1,11 @@
-#' Find median of repeat values
-#'
-#' @param x 
-#'
-#' @returns
-#' @export
-#'
-#' @examples
-#' long <- all_sites_df %>%
-#' pivot_longer(cols = c(K, "NO3-N", Mg, Ca, "NH4-N"), names_to = "compound", values_to = "value") %>%
-#'  mutate(
-#'     compound = factor(compound, levels = compounds),
-#'     site = factor(site, levels = sites)
-#'   ) %>% # make compound and site categorical
-#'   group_by(site, compound, date) %>%
-#'   summarize(
-#'     value = find_median(value)
-#'   )
-find_median <- function(x) {
-  if (all(is.na(x))) {
-    return(NA_real_)
-  } else {
-    return(median(x, na.rm = TRUE))
-  }
-}
-
 #' Calculate Moving Mean
 #'
-#' @param dates vector of 
-#' @param values 
-#' @param half_interval 
-#' @param min_valid_interval_points 
-#' @param max_gap_weeks 
+#' @param dates vector of POSIXct dates
+#' @param values vector of sample values 
+#' @param half_interval length of half of the desired interval (in weeks)
+#' @param min_valid_interval_points integer 1-9 setting the minimum number of valid values wihtin an 
+#' #' interval, default value is 1
+#' @param max_gap_weeks integer > 0 setting the maximum number of weeks to allow between samples
 #'
 #' @returns 
 #' @export
@@ -41,7 +16,8 @@ find_median <- function(x) {
 #' mutate(rolling_means = calc_moving_avg(date, 
 #'                                        value))
 #'   
-#' Alternatively to adjust the defaults, e.g. to assert at least 5 valid samples within the desired interval and 
+#' Alternatively to adjust the defaults, e.g. to assert at least 5 valid samples within the desired 
+#' interval and 
 #' ensure that the intervals only contain samples collected within 3 week intervals
 #' 
 #' long <- long %>% 
@@ -60,7 +36,9 @@ calc_moving_avg <- function(dates,
                             min_valid_interval_points = 1, 
                             max_gap_weeks = 1000) {
   
+  # assign a variable with the legnth of 1/2 interval and 1 week in seconds
   half_interval_sec <- half_interval * 7 * 24 * 60 * 60
+  week_sec <- 7 * 24 * 60 * 60
   
   # date values in  numerical POSIXct
   date_sec <- as.numeric(dates)
