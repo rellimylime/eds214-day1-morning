@@ -14,11 +14,11 @@ The data can be downloaded [here](https://portal.edirepository.org/nis/mapbrowse
 
 ## Contents
 
-<details>
-  <summary>[:file_folder: paper](/paper): Render this to run everything
-  **Key Files**
+
+[:file_folder: paper](/paper): Render this to run everything</summary>
+  >**Key Files**
   - [paper.qmd](/paper/paper.qmd)
-</details>
+
 
 <details>
   <summary>[:file_folder: docs](/docs): Contains rendered paper
@@ -70,7 +70,7 @@ K --> R[Other theme elements to mimic graph aesthetics]
 
 ```
 <div class="scrollable-image-container">
-  <img src="resources/flowchart.png" alt="Workflow chart">
+  <img src="../resources/flowchart.png" alt="Workflow chart">
 </div>
 
 ## References
