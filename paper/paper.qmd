@@ -5,6 +5,7 @@ code-fold: true
 editor: visual
 bibliography: references.bib
 ---
+
 ```{r}
 #| include: FALSE
 #| 
@@ -46,7 +47,7 @@ Temporally the samples are irregularly spaced, roughly weekly to monthly, with g
 
 The moving averages calculated in this analysis are center aligned
 
-The following analysis requires only one valid concentration value within a 9-wk period to calculate and plot the mean. Additionally, there is no restriction on the time passed between valid samples. If you wish to add such constraints (or adjust the rolling average interval) the **calc_moving_avg()** function contains parameters whose default values can be changed or over ridden at the time of the call. (See the [function documentation](R/utils.R) for an example demonstrating this adjustment)
+The following analysis requires only one valid concentration value within a 9-wk period to calculate and plot the mean. Additionally, there is no restriction on the time passed between valid samples. If you wish to add such constraints (or adjust the rolling average interval) the **calc_moving_avg()** function contains parameters whose default values can be changed or over ridden at the time of the call. (See the [function documentation](R/calc_moving_avg.R) for an example demonstrating this adjustment)
 
 ## Data
 
@@ -74,9 +75,9 @@ Key parameters:
 
 #### Data frame manipulation
 
-Compound and site variables were converted to categorical factors and pivoted into long format for easier grouping and plotting. The `find_median(x)` function is applied to the grouped dataframe before applying `calc_moving_avg(dates, values, ...)` to the resulting data frame grouped by site, compound, and date.[^*]
+Compound and site variables were converted to categorical factors and pivoted into long format for easier grouping and plotting. The `find_median(x)` function is applied to the grouped dataframe before applying `calc_moving_avg(dates, values, ...)` to the resulting data frame grouped by site, compound, and date.[^1]
 
-[^*]: This was done with merged and cleaned data; the four relevant raw data files were [loaded](scripts/1_load_data.R) combined into one dataframe, this manipulation can be seen [here](scripts/2_process_data.R). 
+[^1]: This was done with merged and cleaned data; the four relevant raw data files were [loaded](scripts/1_load_data.R) combined into one dataframe, this manipulation can be seen [here](scripts/2_process_data.R).
 
 Final visualizations were generated using `geom_line`, with additional styling elements including site-specific line types, a vertical marker for the hurricane date, faceted panels by compound with free y-scales, and a black-and-white theme to match the aesthetic of prior figures.
 
@@ -168,4 +169,3 @@ ggsave(
 
 p
 ```
-

@@ -186,7 +186,7 @@ K --> R[Other theme elements to mimic graph aesthetics]
 ```
 
 <div style="overflow-x:auto; max-width:100%; border:1px solid #ddd; padding:8px;">
-<img src="/resources/flowchart.png" alt="Flowchart" style="display:block; max-width:none; height:auto;">
+<img src="resources/flowchart.png" alt="Flowchart" style="display:block; max-width:none; height:auto;">
 </div>
 
 
