@@ -28,7 +28,9 @@ folder:
 
 <details>
 
-<summary><b>[data](/data)</b>: Contains raw and processed data</summary>
+<summary>
+
+[**data**](/data): Contains raw and processed data</summary>
 
 **Key Files**
 
@@ -40,7 +42,9 @@ folder:
 
 <ul>
 
-<li>[cleaned_data.csv](/data/processed_data/cleaned_data.csv)</li>
+<li>
+[cleaned_data.csv](/data/processed_data/cleaned_data.csv)
+</li>
 
 </ul>
 
@@ -70,13 +74,17 @@ folder:
 
 <details>
 
-<summary>[paper](/paper): Render this to run everything</summary>
+<summary>
+[**paper**](/paper): Render this to run everything
+</summary>
 
 **Key Files**
 
 <ul>
 
-<li>[paper.qmd](/paper/paper.qmd)</li>
+<li>
+[paper.qmd](/paper/paper.qmd)
+</li>
 
 </ul>
 
@@ -84,7 +92,9 @@ folder:
 
 <details>
 
-<summary>[**docs**](/docs): Contains rendered paper</summary>
+<summary>
+[**docs**](/docs): Contains rendered paper
+</summary>
 
 **Key Files**
 
