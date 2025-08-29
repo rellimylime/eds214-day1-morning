@@ -173,7 +173,9 @@ concentrations and fluxes in eight tropical forest watersheds of the
 Luquillo Experimental Forest, Puerto Rico* [@schaefer2000].
 
 The following flowchart describes the workflow the the analysis done to
-replicate the figure.
+replicate the figure. 
+
+Overview: Merge and clean 4 data sets and calculate the moving average concentrations of each of 5 ions at 4 different sites. Then plot 
 
 ``` mermaid
 flowchart LR
@@ -211,6 +213,9 @@ K --> R[Other theme elements to mimic graph aesthetics]
 <img src="resources/flowchart.png" alt="Flowchart" style="display:block; max-width:none; height:auto;">
 </div>
 
+The goal is to reproduce the following figure:
+
+![](resources/figure_to_replicate.png)
 
 ## References
 
