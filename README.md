@@ -160,21 +160,12 @@ Contains rendered paper **Key Files**
 </details>
 
 
+- [**0_init_env.R**](/0_init_env.R): Installs required libraries
 
-<ul>
+- [**1_load_data.R**](/1_load_data.R): Loads raw data files
 
-<li>
-[**0_init_env.R**](/0_init_env.R): Installs required libraries</li>
+- [**2_process_data.R**](/1_process_data.R): performs the necessary analysis and plots
 
-<li>
-[**1_load_data.R**](/1_load_data.R): Loads raw data files</li>
-
-<li>
-[**2_process_data.R**](/1_process_data.R): performs the necessary analysis and plots</li>
-
-</ul>
-
-</details>
 
 ## Methods
 
