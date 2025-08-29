@@ -28,7 +28,9 @@ folder:
 
 <details>
 
-<summary><b>[data](/data)</b>: Contains raw and processed data</summary>
+<summary><b>
+[data](/data)
+</b>: Contains raw and processed data</summary>
 
 **Key Files**
 
@@ -188,6 +190,17 @@ K --> R[Other theme elements to mimic graph aesthetics]
 ::: scrollable-image-container
 <img src="resources/flowchart.png" alt="Workflow chart"/>
 :::
+
+<div style="overflow-x:auto; max-width:100%; border:1px solid #ddd; padding:8px;">
+  <img src="resources/flowchart.png" alt="Flowchart"
+       style="display:block; max-width:none; height:auto;">
+</div>
+
+
+<div class="scroll-x">
+  <img src="resources/flowchart.png" alt="Flowchart" class="no-max">
+</div>
+
 
 ## References
 
