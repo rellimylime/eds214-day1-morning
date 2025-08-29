@@ -5,12 +5,19 @@ code-fold: true
 editor: visual
 bibliography: references.bib
 ---
+```{r}
+#| include: FALSE
+#| 
+source("../R/calc_moving_avg.R")
+source("../R/find_median.R")
+
+```
 
 ## Background
 
 ### Purpose
 
-![](/resources/figure_to_replicate.png){style="float:right;"} This document contains the scripts necessary to replicate figure 2 from *Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental\
+This document contains the scripts necessary to replicate figure 2 from *Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental\
 Forest, Puerto Rico* [@schaefer2000]. In the methods section, the details of figure 2 are described as follows:
 
 > "Time-series plots of rain inputs and streamwater concentrations are presented as 9-wk moving averages. This approach minimized rapid fluctuations caused by concentration-discharge interactions, made longer-term patterns more apparent, and permitted data from several streams and ions to be presented together. Stream concentration data are presented in two groups, the El Verde streams (QS, QT, QPA, QPB), and the Bisley streams (PRM, BQ1, BQ2, BQ3). Moving averages were not plotted where there were gaps in sampling or in particular chemical analyses."
@@ -21,19 +28,19 @@ The data utilized in this analysis come from is was collected from 1983 - 2020 (
 
 Temporally the samples are irregularly spaced, roughly weekly to monthly, with gaps. The following are the fields from the data relevant to this analysis:
 
-Sample_Date \> YYYY-DD-MM
+**Sample_Date** \> YYYY-DD-MM
 
-Sample_ID \> Site name abreviation (e.g. Q1-Q3, PRM)
+**Sample_ID** \> Site name abreviation (e.g. Q1-Q3, PRM)
 
-K \> potassium concentration, mg L\^-1
+**K** \> potassium concentration, mg L\^-1
 
-NO3-N \> nitrate as nitrogen concentration, µg N L\^-1
+**NO3-N** \> nitrate as nitrogen concentration, µg N L\^-1
 
-NH4-N, ammonium as nitrogen concentration, µg N L\^-1
+**NH4-N**, ammonium as nitrogen concentration, µg N L\^-1
 
-Mg, magnesium concentration, mg L\^-1
+**Mg**, magnesium concentration, mg L\^-1
 
-Ca, calcium concentration, mg L\^-1
+**Ca**, calcium concentration, mg L\^-1
 
 #### Assumptions + Disclaimers:
 
@@ -47,6 +54,118 @@ The data required to run this script can be downloaded independently [here](http
 
 ## Methods
 
-After [cleaning](scripts/2_process_data.R)
+#### Function Description
+
+Two functions were used in the analysis
+
+`find_median(x)`
+
+This function returns the median of a numeric vector `x`, ignoring `NA` values. If all values are missing, it returns `NA_real_`. It’s used to collapse repeated measurements within the same site-compound-date group.
+
+`calc_moving_avg(dates, values, ...)`
+
+This function computes a rolling mean centered around each observation date. It defines a time window (in weeks), filters for valid observations within that window, and excludes intervals with excessive temporal gaps. The result is a smoothed time series that respects both sampling density and temporal continuity.
+
+Key parameters:
+
+-   `half_interval`: window size in weeks (default 4.5)
+-   `min_valid_interval_points`: minimum number of non-NA values required
+-   `max_gap_weeks`: maximum allowable gap between observations
+
+#### Data frame manipulation
+
+Compound and site variables were converted to categorical factors and pivoted into long format for easier grouping and plotting. The `find_median(x)` function is applied to the grouped dataframe before applying `calc_moving_avg(dates, values, ...)` to the resulting data frame grouped by site, compound, and date.[^*]
+
+[^*]: This was done with merged and cleaned data; the four relevant raw data files were [loaded](scripts/1_load_data.R) combined into one dataframe, this manipulation can be seen [here](scripts/2_process_data.R). 
+
+Final visualizations were generated using `geom_line`, with additional styling elements including site-specific line types, a vertical marker for the hurricane date, faceted panels by compound with free y-scales, and a black-and-white theme to match the aesthetic of prior figures.
 
 ## Results
+
+```{r}
+#| code-fold: true
+#| warning: false
+#| message: false
+
+
+library(tidyverse)
+
+all_sites_df <- read_csv(here::here("data", "processed_data", "cleaned_data.csv"))
+# Collapse values and calculate moving average
+long <- all_sites_df %>%
+  # Make a column named compound to hold the chemical name
+  pivot_longer(cols = c(K, "NO3-N", Mg, Ca, "NH4-N"), names_to = "compound", values_to = "value") %>%
+  
+  # Make the compound and site column values categorical
+  mutate(
+    compound = factor(compound, levels = unique(compound)),
+    site = factor(site, levels = unique(site))
+  ) %>% 
+  
+  # Group by site compound and date
+  group_by(site, compound, date) %>%
+  
+  # Collapse multiple values with same date, site, compound by selecting the median value
+  summarize(
+    value = find_median(value)
+  ) %>%
+  
+  # order by date within the site/compound groups
+  arrange(date, .by_group = TRUE) %>%
+  
+  # Add column for the rolling means using the calc_moving_avg function
+  mutate(rolling_means = calc_moving_avg(date, value))
+
+# Save df with moving average column
+write_csv(long, here::here("data", "processed_data","clean_data_ma.csv"))
+
+# Make the plot
+p <- ggplot(long, aes(x = date, y = rolling_means, linetype = site)) +
+  # Draw the time series lines; drop rows with NA y values
+  geom_line(na.rm = TRUE) +
+  # Use specific line types for each site; keeps legend readable
+  scale_linetype_manual(values = c("solid", "dotted", "dashed", "dotdash")) +
+  # Add a vertical line for Hurricane Hugo (Sept 22, 1989)
+  geom_vline(
+    xintercept = as.POSIXct("1989-09-22", tz = "UTC"),
+    linetype = "longdash",
+    color = "grey"
+  ) +
+  # Make a panel per compound, one column, free y scales
+  # Label strips on the left with readable text
+  facet_wrap(
+    ~compound,
+    ncol = 1,
+    scales = "free_y",
+    strip.position = "left",
+    labeller = as_labeller(c(
+      "K"     = "Potassium\nconcentration\n(mg L^-1)",
+      "NO3-N" = "Nitrate\nconcentration\n(ug N L^-1)",
+      "Mg"    = "Magnesium\nconcentration\n(mg L^-1)",
+      "Ca"    = "Calcium\nconcentration\n(mg L^-1)",
+      "NH4-N" = "Ammonium\nconcentration\n(ug N L^-1)"
+    ))
+  ) +
+  # Axis labels; y is NULL because each panel title carries units
+  labs(x = "Years", y = NULL) +
+  # Baseline black and white theme
+  theme_bw() +
+  # Tidy up grid and strip placement
+  theme(
+    panel.grid.minor = element_blank(),                # hide minor grid lines
+    strip.background = element_blank(),                # remove strip background
+    strip.text.y.left = element_text(),                # keep left strip text
+    strip.placement = "outside",                       # place strips outside panel
+    panel.spacing.y = grid::unit(0, "lines"),          # no vertical spacing between panels
+    legend.title = element_blank(),                    # no legend title
+    legend.position = c(0.89, 0.91)                    # place legend inside plot
+  )
+
+ggsave(
+  filename = here::here("output", "replica_plot.png"),
+  width = 1560, height = 2167, units = "px"
+)
+
+p
+```
+
