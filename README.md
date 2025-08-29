@@ -75,8 +75,7 @@ folder:
 <details>
 
 <summary>
-
-[**paper**](/paper): Render this to run everything </summary>
+<b>paper</b>: Render this to run everything </summary>
 
 **Key Files**
 
@@ -93,8 +92,7 @@ folder:
 <details>
 
 <summary>
-
-[**docs**](/docs): Contains rendered paper </summary>
+<b>docs</b>: Contains rendered paper </summary>
 
 **Key Files**
 
