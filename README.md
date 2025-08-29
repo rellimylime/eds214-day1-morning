@@ -70,7 +70,7 @@ folder:
 
 <details>
 
-<summary>**[paper](/paper)**: Render this to run everything</summary>
+<summary>[paper](/paper): Render this to run everything</summary>
 
 **Key Files**
 
