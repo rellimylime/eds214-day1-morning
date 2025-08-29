@@ -18,15 +18,17 @@ The data can be downloaded
 [here](https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-luq.20.4923064).
 The following are the data files whose download is required to run the
 script. These files can be found in the [/data/raw_data](/data/raw)
-folder: - Quebrada one-Bisley (Q1) Chemistry Data - Quebrada one-Bisley
-(Q2) Chemistry Data - Quebrada one-Bisley (Q3) Chemistry Data - Puente
-Roto Mameyes (MPR) Chemistry Data
+folder: 
+- Quebrada one-Bisley (Q1) Chemistry Data 
+- Quebrada one-Bisley (Q2) Chemistry Data 
+- Quebrada one-Bisley (Q3) Chemistry Data 
+- Puente Roto Mameyes (MPR) Chemistry Data
 
 ## Contents
 
 <details>
 
-<summary>[**data**](/data): Contains raw and processed data</summary>
+<summary><a href="file:///data"><b>Link 1</b></a>: Contains raw and processed data</summary>
 
 **Key Files**
 
