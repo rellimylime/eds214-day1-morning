@@ -29,6 +29,7 @@ folder:
 <details>
 
 <summary>
+
 [**data**](/data): Contains raw and processed data</summary>
 
 **Key Files**
@@ -74,8 +75,8 @@ folder:
 <details>
 
 <summary>
-[**paper**](/paper): Render this to run everything
-</summary>
+
+[**paper**](/paper): Render this to run everything </summary>
 
 **Key Files**
 
@@ -92,8 +93,8 @@ folder:
 <details>
 
 <summary>
-[**docs**](/docs): Contains rendered paper
-</summary>
+
+[**docs**](/docs): Contains rendered paper </summary>
 
 **Key Files**
 
@@ -107,7 +108,9 @@ folder:
 
 <details>
 
-<summary>[**resources**](/resources): Contains the original figure we
+<summary>
+
+[**resources**](/resources): Contains the original figure we
 are attempting to replicate and our analysis flowchart</summary>
 
 Contains rendered paper **Key Files**
@@ -124,7 +127,9 @@ Contains rendered paper **Key Files**
 
 <details>
 
-<summary>[**output**](/output)</summary>
+<summary>
+
+[**output**](/output)</summary>
 
 Contains final replicated figure **Key Files**
 
@@ -138,7 +143,9 @@ Contains final replicated figure **Key Files**
 
 <details>
 
-<summary>[**R**](/R): Contains functions used in analysis</summary>
+<summary>
+
+[**R**](/R): Contains functions used in analysis</summary>
 
 Contains rendered paper **Key Files**
 
@@ -147,6 +154,23 @@ Contains rendered paper **Key Files**
 <li>[calc_moving_avg.R](/R/calc_moving_avg.R)</li>
 
 <li>[find_median.R](/R/find_median.R)</li>
+
+</ul>
+
+</details>
+
+
+
+<ul>
+
+<li>
+[**0_init_env.R**](/0_init_env.R): Installs required libraries</li>
+
+<li>
+[**1_load_data.R**](/1_load_data.R): Loads raw data files</li>
+
+<li>
+[**2_process_data.R**](/1_process_data.R): performs the necessary analysis and plots</li>
 
 </ul>
 
