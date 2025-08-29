@@ -28,7 +28,7 @@ folder:
 
 <details>
 
-<summary><a href="file:///data"><b>Link 1</b></a>: Contains raw and processed data</summary>
+<summary><b>[data](/data)</b>: Contains raw and processed data</summary>
 
 **Key Files**
 
@@ -70,7 +70,7 @@ folder:
 
 <details>
 
-<summary>[**paper**](/paper): Render this to run everything</summary>
+<summary>**[paper](/paper)**: Render this to run everything</summary>
 
 **Key Files**
 
