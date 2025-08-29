@@ -38,7 +38,9 @@ The README includes a zoom-able chart of the workflow as well as a brief overvie
 
 [M] Intermediate outputs are created and saved to a separate folder from raw data
 
-[M] **At least one piece of functionality has been refactored into a function in its own file**
+[E] **At least one piece of functionality has been refactored into a function in its own file**
+
+- Fantastic Roxygen documentation with really good examples!
 
 ## Document
 
